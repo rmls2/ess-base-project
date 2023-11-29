@@ -37,3 +37,10 @@ When o usuário "Pedro" escolhe "atualizar promoção"
 And o usuário "Pedro" deixa as informações da promoção em branco
 And o usuário "Pedro" escolhe "confirmar atualização"
 Then o usuário "Pedro" recebe mensagem de erro "Por favor, preencha todos os campos obrigatórios"
+
+Scenario: Disparo de Email com Comprovante de Pedido
+Given que o usuário "Alice" realizou uma transação com sucesso
+And o sistema possui o endereço de email válido do usuário "Alice"
+When o sistema dispara um email para "Alice" com o comprovante de pedido
+Then "Alice" deve receber um email contendo o comprovante de pedido como anexo
+And o sistema deve registrar o envio do email no histórico de comunicações
