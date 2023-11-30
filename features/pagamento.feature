@@ -44,3 +44,11 @@ And o sistema possui o endereço de email válido do usuário "Alice"
 When o sistema dispara um email para o usuário "Alice" com o comprovante de pedido
 Then o usuário "Alice" deve receber um email contendo o comprovante de pedido como anexo
 And o sistema deve registrar o envio do email no histórico de comunicações
+
+Scenario: Remoção de Promoção com sucesso
+Given que o usuário "Pedro" está logado como "administrador"
+And há uma promoção existente no sistema para o hotel "noite estrelada"
+When o usuário "Pedro" acessa a lista de promoções do hotel
+And o usuário "Pedro" escolhe remover a promoção em questão do hotel "noite estrelada"
+Then a promoção do hotel "noite estrelada" é removida do sistema
+And o usuário "Pedro" recebe uma mensagem de confirmação "Promoção removida com sucesso"
