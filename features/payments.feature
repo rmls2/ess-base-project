@@ -13,6 +13,17 @@ Scenario: adding a new card (payment method)
 	When I select "+" option
 	Then I am at "cadastro de cartão" page
 
+Scenario: editing a card (payment method)
+	Given I am at the "meus cartões" page
+	When I select "pen" option at "cartão_1"
+	Then I am at "edição de cartão" page
+
+Scenario: editing info of a card (payment method) 
+	Given I am at the "edição de cartão" page
+	When I erase nome de cartão "Higgins claudiano" 
+	Then I "Save" the information
+	And I can see a message of "Informações incompletas" there is not a valid "nome de cartão"
+
 Scenario: registering info about a new card (payment method) 
 	Given I am at the "cadastro de cartão" page
 	When I add fill nome de cartão "Higgins claudiano" 
