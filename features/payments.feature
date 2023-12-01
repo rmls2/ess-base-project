@@ -52,4 +52,16 @@ Scenario: registering info about a new card (incompleto)
 	And I select "débito" option
 	Then I "Save" the information
 	And I can see a message of "Informações incompletas" 
-	And Its showed that there is not a valid "codigo de segurança" 
+	And Its showed that there is not a valid "codigo de segurança"
+
+scenario: removing a card
+	Given I am at the "Meu cartões" page
+	When I select the "X" icon at "cartão_1"
+	Then I can see a pop-up message "!" 
+
+Scenario: removing a card pt2
+	Given I am at the "Meus cartões" Page
+	And I can see a pop-up message "!"
+	When I select "Sim" option
+	Then My card "cartão1" is removed
+	And I can see a "Sucesso" message 
