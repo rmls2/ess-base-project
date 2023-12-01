@@ -41,4 +41,5 @@ Scenario: registering info about a new card (payment method) [incompleto]
 	And I add fill data de validade "12/29"
 	And I select "débito" option
 	Then I "Save" the information
-	And I can see a message of "Informações incompletas" there is not a valid "codigo de segurança" 
+	And I can see a message of "Informações incompletas" 
+	And I can see a message indicating that there is not a valid "codigo de segurança" 
