@@ -13,7 +13,7 @@ Scenario: adding a new card (payment method)
 	When I select "+" option
 	Then I am at "cadastro de cartão" page
 
-Scenario: registering info about a new card (payment method)
+Scenario: registering info about a new card (payment method) 
 	Given I am at the "cadastro de cartão" page
 	When I add fill nome de cartão "Higgins claudiano" 
 	And I add fill numero de cartão "1234123412341234"
@@ -22,3 +22,12 @@ Scenario: registering info about a new card (payment method)
 	And I select "débito" option
 	Then I "Save" the information
 	And I can see a message of "Sucesso"
+
+Scenario: registering info about a new card (payment method) [incompleto]
+	Given I am at the "cadastro de cartão" page
+	When I add fill nome de cartão "Higgins claudiano" 
+	And I add fill numero de cartão "1234123412341234"
+	And I add fill data de validade "12/29"
+	And I select "débito" option
+	Then I "Save" the information
+	And I can see a message of "Informações incompletas" there is not a valid "codigo de segurança" 
