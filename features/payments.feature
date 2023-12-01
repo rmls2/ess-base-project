@@ -5,18 +5,13 @@ Feature: Payments
 
 Scenario: overview of my cards
 	Given I am at the "pagamentos" page
-	when I select "meus cartões" option
-	then I can see "meus cartões" page
+	When I select "meus cartões" option
+	Then I can see "meus cartões" page
 
 Scenario: overview of transaction history
 	Given I am at the "pagamentos" page
 	when I select "histórico de transações" option
 	then I can see "histórico de transações" page
-
-Scenario: Transaction history of a card
-	Given I am at the "Historico de transações" page
-	when I select a card "cartão1" 
-	then I can see the history of the card "Historico cartão1" page
 
 Scenario: adding a new card (payment method)
 	Given I am at the "meus cartões" page
@@ -52,3 +47,8 @@ Scenario: registering info about a new card (payment method) [incompleto]
 	And I select "débito" option
 	Then I "Save" the information
 	And I can see a message of "Informações incompletas" there is not a valid "codigo de segurança" 
+
+Scenario: Transaction history of a card
+	Given I am at the "Historico de transações" page
+	when I select a card "cartão1" 
+	then I can see the history of the card "Historico cartão1" page
