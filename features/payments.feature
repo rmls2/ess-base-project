@@ -10,8 +10,8 @@ Scenario: overview of my cards
 
 Scenario: overview of transaction history
 	Given I am at the "pagamentos" page
-	when I select "histórico de transações" option
-	then I can see "histórico de transações" page
+	When I select "histórico de transações" option
+	Then I can see "histórico de transações" page
 
 Scenario: Transaction history of a card
 	Given I am at the "Historico de transações" page
@@ -28,7 +28,7 @@ Scenario: editing a card (payment method)
 	When I select "pen" option at "cartão_1"
 	Then I am at "edição de cartão" page
 
-Scenario: editing info of a card (payment method) 
+Scenario: editing info of a card (incompleto) 
 	Given I am at the "edição de cartão" page
 	When I erase nome de cartão "Higgins claudiano" 
 	Then I "Save" the information
@@ -36,19 +36,19 @@ Scenario: editing info of a card (payment method)
 
 Scenario: registering info about a new card (payment method) 
 	Given I am at the "cadastro de cartão" page
-	When I add fill nome de cartão "Higgins claudiano" 
-	And I add fill numero de cartão "1234123412341234"
-	And I add fill data de validade "12/29"
-	And I add fill código de segurança (cvv) "000"
+	When I add nome de cartão "Higgins claudiano" 
+	And I add numero de cartão "1234123412341234"
+	And I add data de validade "12/29"
+	And I add código de segurança (cvv) "000"
 	And I select "débito" option
 	Then I "Save" the information
 	And I can see a message of "Sucesso"
 
-Scenario: registering info about a new card (payment method) [incompleto]
+Scenario: registering info about a new card (incompleto)
 	Given I am at the "cadastro de cartão" page
-	When I add fill nome de cartão "Higgins claudiano" 
-	And I add fill numero de cartão "1234123412341234"
-	And I add fill data de validade "12/29"
+	When I add nome de cartão "Higgins claudiano" 
+	And I add numero de cartão "1234123412341234"
+	And I add data de validade "12/29"
 	And I select "débito" option
 	Then I "Save" the information
 	And I can see a message of "Informações incompletas" 
