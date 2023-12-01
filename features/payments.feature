@@ -53,4 +53,3 @@ Scenario: registering info about a new card (payment method) [incompleto]
 	Then I "Save" the information
 	And I can see a message of "Informações incompletas" 
 	And Its showed that there is not a valid "codigo de segurança" 
-
