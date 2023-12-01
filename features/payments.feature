@@ -3,10 +3,20 @@ Feature: Payments
 	I want to add and modify methods of payment
 	so that I can buy service by payment methods using a payment method registered
 
+Scenario: Overview of payments slip
+	Given I am at the "pagamentos" page
+	When I select "comprovantes" option
+	Then I can see "comprovantes" page
+
 Scenario: overview of my cards
 	Given I am at the "pagamentos" page
 	When I select "meus cartões" option
 	Then I can see "meus cartões" page
+
+Scenario: get back to payments page
+	Given I am at the "Meus cartões" page
+	When I select "voltar" 
+	Then I can see "pagamentos" page
 
 Scenario: overview of transaction history
 	Given I am at the "pagamentos" page
@@ -54,7 +64,7 @@ Scenario: registering info about a new card (incompleto)
 	And I can see a message of "Informações incompletas" 
 	And Its showed that there is not a valid "codigo de segurança"
 
-scenario: removing a card
+Scenario: removing a card
 	Given I am at the "Meu cartões" page
 	When I select the "X" icon at "cartão_1"
 	Then I can see a pop-up message "!" 
