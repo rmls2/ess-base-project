@@ -1,12 +1,22 @@
 Feature: Payments
 	As a user looking to buy a host travel services
 	I want to add and modify methods of payment
-	So that I can buy service by payment methods using a payment method registered
+	so that I can buy service by payment methods using a payment method registered
 
 Scenario: overview of my cards
 	Given I am at the "pagamentos" page
 	when I select "meus cartões" option
 	then I can see "meus cartões" page
+
+Scenario: overview of transaction history
+	Given I am at the "pagamentos" page
+	when I select "histórico de transações" option
+	then I can see "histórico de transações" page
+
+Scenario: Transaction history of a card
+	Given I am at the "Historico de transações" page
+	when I select a card "cartão1" 
+	then I can see the history of the card "Historico cartão1" page
 
 Scenario: adding a new card (payment method)
 	Given I am at the "meus cartões" page
