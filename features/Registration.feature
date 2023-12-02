@@ -13,4 +13,3 @@ when I correctly fill in the fields "Name", "surname", "email", "password", "tel
 And click on the "Register" button
 
 Then I received a confirmation message stating that the registration was successful.
-(mudei algo no then para fins do roteiro de configuração questão 7. e))
