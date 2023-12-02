@@ -30,4 +30,3 @@ And eu posso ver a atração "As Coloridas" com o valor da atração "R$500.00"
 When eu tento realizar uma reserva 
 Then eu sou redirecionado para a página de "pagamentos"
 And eu posso ver o nome da atração "As Coloridas" com o valor "R$500.00" em "Valor a pagar"
-And ...
