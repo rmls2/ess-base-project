@@ -53,8 +53,8 @@ Scenario: Failed Promotion Update
     And the previous informations on hotel "noite estrelada" are keeped
 
 Scenario: Successful Promotion Removal
-    Given que the user "Pedro" is logged in as "administrador"
-    And há uma promoção existente no system for the hotel "noite estrelada"
+    Given the user "Pedro" is logged in as "administrador"
+    And exists a promotion in system for the hotel "noite estrelada"
     When the user "Pedro" accesses the promotions list of hotel
     And the user "Pedro" chooses "remover promoção" in question of the hotel "noite estrelada"
     And the user "Pedro" chooses "confirmar remoção"
