@@ -49,7 +49,7 @@ Scenario: Failed Promotion Update
     And the user "Pedro" leaves the promotions informations blank
     And the user "Pedro" chooses "confirmar atualização"
     Then the user "Pedro" receives an error message of "Por favor, preencha todos os campos obrigatórios"
-    And the promoção is not updated in the system
+    And the promotion is not updated in the system
     And the previous informations on hotel "noite estrelada" are keeped
 
 Scenario: Successful Promotion Removal
@@ -58,9 +58,9 @@ Scenario: Successful Promotion Removal
     When the user "Pedro" accesses the promotions list of hotel
     And the user "Pedro" chooses "remover promoção" in question of the hotel "noite estrelada"
     And the user "Pedro" chooses "confirmar remoção"
-    Then the promoção do hotel "noite estrelada" is removed from the system
+    Then the promotion of hotel "noite estrelada" is removed from the system
     And the user "Pedro" receives the message de confirmação "Promoção removida com sucesso"
-    And the promoção removida não é mais exibida na página de promoções
+    And the promotion is no longer displayed on the promotions page
 
 Scenario: Cancel Promotion Removal
     Given that the user "Pedro" is logged in as an "administrator"
