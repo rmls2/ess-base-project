@@ -12,10 +12,10 @@ And eu posso ver 5 fotos sobre a "atração"
 
 Scenario: Ver todas as avaliações
 Given eu estou na página de "atração"
-And eu posso ver 3 avaliações com as notas "8.63" e "9"
+And eu posso ver 3 avaliações com as notas "8.63", “8,63 e "9"
 When eu seleciono "ver todas as avaliações"
 Then eu ainda estou na página de "atração"
-And eu posso ver 5 avaliações com as notas "8.6", "9", 6.67", "8" e "9.1"
+And eu posso ver 5 avaliações com as notas "8.63", ”8,63”, "9", 6.67" e "8"
 
 Scenario: Selecionar atração relacionada
 Given eu estou na página de "atração"
@@ -27,13 +27,7 @@ And posso ver o nome "Aconchego Familiar-Piscina Privativa" e o CEP "55870000"
 Scenario: Realizar reservar
 Given eu estou na página de "atração"
 And eu posso ver a atração "As Coloridas" com o valor da atração "R$500.00"
-When eu tento realizar uma reserva 
+When eu seleciono “Realizar uma reserva”
 Then eu sou redirecionado para a página de "pagamentos"
 And eu posso ver o nome da atração "As Coloridas" com o valor "R$500.00" em "Valor a pagar"
 
-scenario: teste para orteiro
-Given ...
-When ...
-The ...
-
-#teste roteiro 3
