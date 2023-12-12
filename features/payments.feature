@@ -38,6 +38,13 @@ Scenario: editing a card (payment method)
 	When I select "pen" option at "cartão_1"
 	Then I am at "edição de cartão" page
 
+Scenario: editing info of a card  
+	Given I am at the "edição de cartão" page
+	When I erase nome de cartão "Higgins claudiano"
+	And I add a new nome de cartão "Higgins Claudiano" 
+	Then I "Save" the information
+	And I can see a message of "Sucesso"
+
 Scenario: editing info of a card (incompleto) 
 	Given I am at the "edição de cartão" page
 	When I erase nome de cartão "Higgins claudiano" 
