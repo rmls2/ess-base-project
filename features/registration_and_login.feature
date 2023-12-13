@@ -35,3 +35,6 @@ Scenario: recovering forgotten password
         When I select the "forgot password?"
         Then I receive the message "we have sent the recovery email to your registered email"
         And I am redirected to the "login" page and I can notice that the "email" field and the "password" field are not filled in.
+
+
+        
