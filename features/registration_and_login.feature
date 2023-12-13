@@ -30,11 +30,6 @@ Scenario: failed to log into the system
         Then I get a message "incorrect email or password!" indicating that the credentials are incorrect
         And I am instructed to fill in the "email field" and "password field.
         
-Scenario: recovering forgotten password
-        Given I am an email user "joao@gmail.com" already logged in to the platform and I am on the "login" page
-        When I select the "forgot password?" option
-        Then I receive the message "we have sent the recovery email to your registered email"
-        And I am redirected to the "login" page and I can notice that the "email" field and the "password" field are not filled in.
 
 Scenario: recovering forgotten password
         Given I am an email user "joao@gmail.com" already logged in to the platform and I am on the "login" page
