@@ -3,6 +3,11 @@ Feature: Payments
 	I want to add and modify methods of payment
 	so that I can buy service by payment methods using a payment method registered
 
+Scenario: Overview of payments slip
+	Given I am at the "pagamentos" page
+	When I select "comprovantes" option
+	Then I can see "comprovantes" page
+
 Scenario: overview of my cards
 	Given I am at the "pagamentos" page
 	When I select "meus cartões" option
@@ -33,6 +38,13 @@ Scenario: editing a card (payment method)
 	When I select "pen" option at "cartão_1"
 	Then I am at "edição de cartão" page
 
+Scenario: editing info of a card  
+	Given I am at the "edição de cartão" page
+	When I erase nome de cartão "Higgins claudiano"
+	And I add a new nome de cartão "Higgins Claudiano" 
+	Then I "Save" the information
+	And I can see a message of "Sucesso"
+
 Scenario: editing info of a card (incompleto) 
 	Given I am at the "edição de cartão" page
 	When I erase nome de cartão "Higgins claudiano" 
@@ -59,7 +71,7 @@ Scenario: registering info about a new card (incompleto)
 	And I can see a message of "Informações incompletas" 
 	And Its showed that there is not a valid "codigo de segurança"
 
-scenario: removing a card
+Scenario: removing a card
 	Given I am at the "Meu cartões" page
 	When I select the "X" icon at "cartão_1"
 	Then I can see a pop-up message "!" 
