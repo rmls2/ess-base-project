@@ -147,15 +147,21 @@ class Database():
 
         item = collection.find_one({"id": str(item_id)})
         return item
-
-    def get_item_by_hotel_id(self, collection_name: str, hotel_id: str):
+                
+    def get_value_by_room_id(self, collection_name: str, room_id: str) -> dict:
         collection: Collection = self.db[collection_name]
 
-        item = collection.find_one({"hotel_id": str(hotel_id)})
+        item = collection.find_one({"room_id": str(room_id)})
         return {
             "reservationValue": item["reservationValue"],
             "newValue": item["reservationValue"] - item["discountValue"]
         }
+
+    def get_current_discount_value_by_room_id(self, collection_name: str, room_id: str) -> dict:
+        collection: Collection = self.db[collection_name]
+        item = collection.find_one({"room_id": str(room_id)})
+        
+        return item
 
     def insert_item(self, collection_name: str, item: dict) -> dict:
         """
@@ -184,18 +190,15 @@ class Database():
             **item
         }
     
-    def insert_promotion(self, collection_name: str, item: dict) -> dict:
+    def insert_promotion(self, collection_name: str, item: dict, room_id: str) -> dict:
 
         item["_id"] = ObjectId() 
-        item["hotel_id"] = str(uuid4())[:self.ID_LENGTH]
+        item["room_id"] = room_id
 
         collection: Collection = self.db[collection_name]
 
-        item_id = collection.insert_one(item).inserted_id
-        return {
-            "id": str(item_id),
-            **item
-        }
+        collection.insert_one(item)
+        return item
 
     def update_promotion(self, hotel_name: str, new_value: float) -> dict:
         collection: Collection = self.db["promotions"]
@@ -210,9 +213,9 @@ class Database():
             **hotel_with_promotion
         }
     
-    def find_hotel_by_name(self, hotel_name: str) -> dict :
+    def find_hotel_by_room_id(self, room_id: str) -> dict :
         collection: Collection = self.db["promotions"]
-        filter = {"hotel": hotel_name}
+        filter = {"room_id": room_id}
         item = collection.find_one(filter)
         return item
     

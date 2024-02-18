@@ -6,23 +6,43 @@ from src.service.impl.promotion_service import PromotionService
 router = APIRouter()
 
 @router.get(
-    "/{hotel_id}",
+    "/{room_id}",
     response_model=HttpResponseModel,
     status_code=status.HTTP_200_OK,
-    description="Retrieve an promotion by hotel ID",
+    description="Retrieve an promotion by room ID",
     tags=["promotions"],
     responses={
         status.HTTP_200_OK: {
             "model": HttpResponseModel,
-            "description": "Successfully got promotion by hotel id",
+            "description": "Successfully got promotion by room id",
         },
         status.HTTP_404_NOT_FOUND: {
-            "description": "Item not found",
+            "description": "Promotion not found",
         }
     },
 )
-def get_promotion(hotel_id: str) -> HttpResponseModel:
-    item_get_response = PromotionService.get_promotion(hotel_id)
+def get_promotion(room_id: str) -> HttpResponseModel:
+    item_get_response = PromotionService.get_promotion(room_id)
+    return item_get_response
+
+@router.get(
+    "/{room_id}/current",
+    response_model=HttpResponseModel,
+    status_code=status.HTTP_200_OK,
+    description="Retrieve current discount value by room ID",
+    tags=["promotions"],
+    responses={
+        status.HTTP_200_OK: {
+            "model": HttpResponseModel,
+            "description": "Successfully got discount value by room id",
+        },
+        status.HTTP_404_NOT_FOUND: {
+            "description": "Discount not found",
+        }
+    },
+)
+def get_current_discount_value (room_id: str) -> HttpResponseModel:
+    item_get_response = PromotionService.get_current_discount_value(room_id)
     return item_get_response
 
 @router.post(

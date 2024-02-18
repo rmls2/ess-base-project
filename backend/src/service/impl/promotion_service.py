@@ -6,9 +6,9 @@ from src.schemas.promotion import PromotionModel, PromotionUpdateModel, Promotio
 
 class PromotionService(PromotionServiceMeta):
     @staticmethod
-    def get_promotion(hotel_id: str) -> HttpResponseModel:
-        """Get promotion by hotel id method implementation"""
-        item = db.get_item_by_hotel_id('promotions', hotel_id)
+    def get_promotion(room_id: str) -> HttpResponseModel:
+        """Get promotion by room id method implementation"""
+        item = db.get_value_by_room_id('promotions', room_id)
         if not item:
             return HttpResponseModel(
                 message=HTTPResponses.PROMOTION_NOT_FOUND().message,
@@ -22,11 +22,29 @@ class PromotionService(PromotionServiceMeta):
                 )
 
     @staticmethod
+    def get_current_discount_value(room_id: str) -> HttpResponseModel:
+        """Get current discount value by room id method implementation"""
+        item = db.get_current_discount_value_by_room_id('promotions', room_id)
+        if not item:
+            return HttpResponseModel(
+                message=HTTPResponses.PROMOTION_NOT_FOUND().message,
+                status_code=HTTPResponses.PROMOTION_NOT_FOUND().status_code,
+            )
+        else:
+            value = {"id": str(item["_id"]), "currentValue": item["discountValue"]}
+
+            return HttpResponseModel(
+                    message=HTTPResponses.PROMOTION_FOUND().message,
+                    status_code=HTTPResponses.PROMOTION_FOUND().status_code,
+                    data=item,
+                )
+
+    @staticmethod
     def add_promotion(promotion_request: PromotionModel) -> HttpResponseModel:
         """Add promotion in hotel method implementation"""
         if promotion_request.adm:
             if promotion_request.discountValue > 0 and promotion_request.discountValue <= (promotion_request.reservationValue * 0.5) and promotion_request.discountValue != None:
-                item = db.insert_promotion('promotions', promotion_request.dict())
+                item = db.insert_promotion('promotions', promotion_request.dict(), promotion_request.room_id)
                 if not item:
                     return HttpResponseModel(
                         message=HTTPResponses.PROMOTION_NOT_CREATED().message,
@@ -53,7 +71,7 @@ class PromotionService(PromotionServiceMeta):
     def update_promotion(promotion_request: PromotionUpdateModel) -> HttpResponseModel:
         """Update promotion in hotel method implementation"""
         if promotion_request.adm:
-            hotel_discount = db.find_hotel_by_name(promotion_request.hotel)["reservationValue"]
+            hotel_discount = db.find_hotel_by_room_id(promotion_request.room_id)["reservationValue"]
             if not hotel_discount:
                 return HttpResponseModel(
                     message=HTTPResponses.PROMOTION_NOT_FOUND().message,
@@ -88,7 +106,7 @@ class PromotionService(PromotionServiceMeta):
     def delete_promotion(promotion_request: PromotionDeleteModel) -> HttpResponseModel:
         """Delete a promotion in hotel method implementation"""
         if promotion_request.adm:
-            hotel_discount = db.find_hotel_by_name(promotion_request.hotel)
+            hotel_discount = db.find_hotel_by_room_id(promotion_request.room_id)
             if not hotel_discount:
                 return HttpResponseModel(
                     message=HTTPResponses.PROMOTION_NOT_FOUND().message,
