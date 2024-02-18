@@ -78,4 +78,4 @@ Scenario: Promotion Value Limits
     When the user "Pedro" chooses "cadastrar promoção"
     And the user "Pedro" fills in the "valor" to be discounted with a high value
     And the user "Pedro" chooses "confirmar promoção"
-    Then the user "Pedro" receives an error message of "valor da promoção excede o limite permitido"
+    Then the user "Pedro" receives an error message of "valor da promoção excede o limite permitido" 
