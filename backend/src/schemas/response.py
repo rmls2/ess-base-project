@@ -13,6 +13,13 @@ class HTTPResponses:
     """
 
     @staticmethod
+    def WITHOUT_ACESS() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="User don't have acess",
+            status_code=401,
+        )
+
+    @staticmethod
     def ITEM_NOT_FOUND() -> HttpResponseModel:
         return HttpResponseModel(
             message="Item not found",
@@ -34,6 +41,20 @@ class HTTPResponses:
         )
     
     @staticmethod
+    def PROMOTION_NOT_FOUND() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Promotion not found",
+            status_code=404,
+        )
+
+    @staticmethod
+    def PROMOTION_FOUND() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Promotion found",
+            status_code=200,
+        )
+    
+    @staticmethod
     def PROMOTION_CREATED() -> HttpResponseModel:
         return HttpResponseModel(
             message="Promoção cadastrada",
@@ -44,7 +65,7 @@ class HTTPResponses:
     def PROMOTION_NOT_CREATED() -> HttpResponseModel:
         return HttpResponseModel(
             message="Promoção não criada",
-            status_code=400,
+            status_code=422,
         )
     
     @staticmethod
@@ -58,7 +79,7 @@ class HTTPResponses:
     def PROMOTION_NOT_UPDATED() -> HttpResponseModel:
         return HttpResponseModel(
             message="Promoção não atualizada",
-            status_code=400,
+            status_code=422,
         )
     
     @staticmethod
@@ -66,13 +87,6 @@ class HTTPResponses:
         return HttpResponseModel(
             message="Promoção deletada",
             status_code=200,
-        )
-
-    @staticmethod
-    def PROMOTION_NOT_DELETED() -> HttpResponseModel:
-        return HttpResponseModel(
-            message="Promoção não deletada",
-            status_code=400,
         )
 
     @staticmethod

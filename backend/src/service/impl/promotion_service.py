@@ -11,13 +11,13 @@ class PromotionService(PromotionServiceMeta):
         item = db.get_item_by_hotel_id('promotions', hotel_id)
         if not item:
             return HttpResponseModel(
-                message=HTTPResponses.ITEM_NOT_FOUND().message,
-                status_code=HTTPResponses.ITEM_NOT_FOUND().status_code,
+                message=HTTPResponses.PROMOTION_NOT_FOUND().message,
+                status_code=HTTPResponses.PROMOTION_NOT_FOUND().status_code,
             )
         else:
             return HttpResponseModel(
-                    message=HTTPResponses.ITEM_FOUND().message,
-                    status_code=HTTPResponses.ITEM_FOUND().status_code,
+                    message=HTTPResponses.PROMOTION_FOUND().message,
+                    status_code=HTTPResponses.PROMOTION_FOUND().status_code,
                     data=item,
                 )
 
@@ -45,8 +45,8 @@ class PromotionService(PromotionServiceMeta):
                 )   
         else:
             return HttpResponseModel(
-                    message=HTTPResponses.PROMOTION_NOT_CREATED().message,
-                    status_code=HTTPResponses.PROMOTION_NOT_CREATED().status_code,
+                    message=HTTPResponses.WITHOUT_ACESS().message,
+                    status_code=HTTPResponses.WITHOUT_ACESS().status_code,
             )
         
     @staticmethod
@@ -56,8 +56,8 @@ class PromotionService(PromotionServiceMeta):
             hotel_discount = db.find_hotel_by_name(promotion_request.hotel)["reservationValue"]
             if not hotel_discount:
                 return HttpResponseModel(
-                    message=HTTPResponses.ITEM_NOT_FOUND().message,
-                    status_code=HTTPResponses.ITEM_NOT_FOUND().status_code,
+                    message=HTTPResponses.PROMOTION_NOT_FOUND().message,
+                    status_code=HTTPResponses.PROMOTION_NOT_FOUND().status_code,
                 )
             else:
                 if promotion_request.newDiscountValue > 0 and promotion_request.newDiscountValue <= (hotel_discount * 0.5) and promotion_request.newDiscountValue != None:
@@ -80,8 +80,8 @@ class PromotionService(PromotionServiceMeta):
                     )  
         else:
             return HttpResponseModel(
-                    message=HTTPResponses.PROMOTION_NOT_CREATED().message,
-                    status_code=HTTPResponses.PROMOTION_NOT_CREATED().status_code,
+                    message=HTTPResponses.WITHOUT_ACESS().message,
+                    status_code=HTTPResponses.WITHOUT_ACESS().status_code,
             )
         
     @staticmethod
@@ -91,8 +91,8 @@ class PromotionService(PromotionServiceMeta):
             hotel_discount = db.find_hotel_by_name(promotion_request.hotel)
             if not hotel_discount:
                 return HttpResponseModel(
-                    message=HTTPResponses.ITEM_NOT_FOUND().message,
-                    status_code=HTTPResponses.ITEM_NOT_FOUND().status_code,
+                    message=HTTPResponses.PROMOTION_NOT_FOUND().message,
+                    status_code=HTTPResponses.PROMOTION_NOT_FOUND().status_code,
                 )
             else:
                 hotel_discount["_id"] = str(hotel_discount["_id"])
@@ -104,6 +104,6 @@ class PromotionService(PromotionServiceMeta):
                         )
         else:
             return HttpResponseModel(
-                    message=HTTPResponses.PROMOTION_NOT_DELETED().message,
-                    status_code=HTTPResponses.PROMOTION_NOT_DELETED().status_code,
+                    message=HTTPResponses.WITHOUT_ACESS().message,
+                    status_code=HTTPResponses.WITHOUT_ACESS().status_code,
             )
