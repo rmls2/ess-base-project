@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from backend.src.api import promotion_items
+from src.api import promotion_items
 from src.api import items
 
 api_router = APIRouter()
