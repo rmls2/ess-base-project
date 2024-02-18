@@ -4,6 +4,7 @@ from pymongo import MongoClient, errors
 from pymongo.collection import Collection, IndexModel
 from src.config.config import env
 from logging import INFO, WARNING, getLogger
+from bson import ObjectId
 
 logger = getLogger('uvicorn')
 
@@ -144,8 +145,17 @@ class Database():
         """
         collection: Collection = self.db[collection_name]
 
-        item = collection.find_one({"id": str(item_id)}, {"_id": 0})
+        item = collection.find_one({"id": str(item_id)})
         return item
+
+    def get_item_by_hotel_id(self, collection_name: str, hotel_id: str):
+        collection: Collection = self.db[collection_name]
+
+        item = collection.find_one({"hotel_id": str(hotel_id)})
+        return {
+            "reservationValue": item["reservationValue"],
+            "newValue": item["reservationValue"] - item["discountValue"]
+        }
 
     def insert_item(self, collection_name: str, item: dict) -> dict:
         """
@@ -164,7 +174,7 @@ class Database():
         """
         # TODO: test if this method works
 
-        item["id"] = str(uuid4())[:self.ID_LENGTH]
+        item["_id"] = ObjectId() 
 
         collection: Collection = self.db[collection_name]
 
@@ -172,6 +182,49 @@ class Database():
         return {
             "id": str(item_id),
             **item
+        }
+    
+    def insert_promotion(self, collection_name: str, item: dict) -> dict:
+
+        item["_id"] = ObjectId() 
+        item["hotel_id"] = str(uuid4())[:self.ID_LENGTH]
+
+        collection: Collection = self.db[collection_name]
+
+        item_id = collection.insert_one(item).inserted_id
+        return {
+            "id": str(item_id),
+            **item
+        }
+
+    def update_promotion(self, hotel_name: str, new_value: float) -> dict:
+        collection: Collection = self.db["promotions"]
+        filter = {"hotel": hotel_name}
+
+        update = {"$set": {"discountValue": new_value}}
+
+        hotel_with_promotion = collection.find_one_and_update(filter, update, return_document=True)
+
+        return {
+            "id": str(hotel_with_promotion['_id']),
+            **hotel_with_promotion
+        }
+    
+    def find_hotel_by_name(self, hotel_name: str) -> dict :
+        collection: Collection = self.db["promotions"]
+        filter = {"hotel": hotel_name}
+        item = collection.find_one(filter)
+        return item
+    
+    def delete_promotion(self, hotel_name: str) -> dict:
+        collection: Collection = self.db["promotions"]
+        filter = {"hotel": hotel_name}
+
+        hotel_with_promotion = collection.delete_one(filter)
+
+        return {
+            "hotel_name": hotel_name,
+            "count": str(hotel_with_promotion.deleted_count)
         }
 
     # TODO: implement update_item method

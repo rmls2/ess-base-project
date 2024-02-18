@@ -32,6 +32,48 @@ class HTTPResponses:
             message="Item created",
             status_code=201,
         )
+    
+    @staticmethod
+    def PROMOTION_CREATED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Promoção cadastrada",
+            status_code=201,
+        )
+
+    @staticmethod
+    def PROMOTION_NOT_CREATED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Promoção não criada",
+            status_code=400,
+        )
+    
+    @staticmethod
+    def PROMOTION_UPDATED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Promoção atualizada",
+            status_code=200,
+        )
+
+    @staticmethod
+    def PROMOTION_NOT_UPDATED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Promoção não atualizada",
+            status_code=400,
+        )
+    
+    @staticmethod
+    def PROMOTION_DELETED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Promoção deletada",
+            status_code=200,
+        )
+
+    @staticmethod
+    def PROMOTION_NOT_DELETED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Promoção não deletada",
+            status_code=400,
+        )
 
     @staticmethod
     def SERVER_ERROR() -> HttpResponseModel:
