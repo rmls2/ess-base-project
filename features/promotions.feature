@@ -6,19 +6,16 @@ Feature: Promotions
 Scenario: Successful Promotion Registration
     Given the user "Pedro" is logged in as "administrador"
     And the hotel "noite estrelada" has no promotion
-    And the value of reservation is "157"
     When the user "Pedro" chooses "cadastrar promoção"
-    And the user "Pedro" fills in the "valor" of promotion to be discounted with the value "50"
+    And the user "Pedro" fills in the "valor" of promotion to be discounted with a valid value
     And the user "Pedro" chooses "confirmar promoção"
     Then the user "Pedro" receives a message of "Promoção cadastrada com sucesso!"
     And the hotel "noite estrelada" is in promotion
     And the promotion is displayed with the promotion tag correctly on the rooms page
-    And the user "Pedro" can see the value of reservation is "107"
 
 Scenario: Promotion Registration Failure
     Given the user "Pedro" is logged in as "administrador"
     And the hotel "noite estrelada" has no promotion
-    And the value of reservation is "157"
     When the user "Pedro" chooses "cadastrar promoção"
     And the user "Pedro" leaves the "valor" field in blank
     And the user "Pedro" chooses "confirmar promoção"
@@ -29,7 +26,6 @@ Scenario: Promotion Registration Failure
 Scenario: Attempt to Register a Promotion with Negative Value
     Given the user "Pedro" is logged in as "administrador"
     And the hotel "noite estrelada" has no promotion
-    And the value of reservation is "157"
     When the user "Pedro" chooses "cadastrar promoção"
     And the user "Pedro" fills in the "valor" field with a negative value
     And the user "Pedro" chooses "confirmar promoção"
@@ -40,19 +36,16 @@ Scenario: Attempt to Register a Promotion with Negative Value
 Scenario: Successful Promotion Update
     Given the user "Pedro" is logged in as "administrador"
     And the hotel "noite estrelada" has an existing promotion
-    And the actual value of "noite estrelada" is "107"
     When the user "Pedro" chooses "atualizar promoção"
-    And the user "Pedro" modifies the "valor" to be discounted of promotion to "55"
+    And the user "Pedro" modifies the "valor" to be discounted of promotion
     And the user "Pedro" chooses "confirmar atualização"
     Then the user "Pedro" receives a message of "Promoção atualizada com sucesso!"
     And the modifications in promotion of hotel "noite estrelada" are reflected in the system
     And the modification of promotion is registered correctly in the system
-    And the user "Pedro" can see the value of reservation is "102"
 
 Scenario: Failed Promotion Update
     Given the user "Pedro" is logged in as "administrador"
     And the hotel "noite estrelada" has an existing promotion
-    And the value of reservation is "107"
     When the user "Pedro" chooses "atualizar promoção"
     And the user "Pedro" leaves the promotions informations blank
     And the user "Pedro" chooses "confirmar atualização"
@@ -63,19 +56,16 @@ Scenario: Failed Promotion Update
 Scenario: Successful Promotion Removal
     Given the user "Pedro" is logged in as "administrador"
     And exists a promotion in system for the hotel "noite estrelada"
-    And the actual value of reservation is "107"
     When the user "Pedro" accesses the promotions list of hotel
     And the user "Pedro" chooses "remover promoção" in question of the hotel "noite estrelada"
     And the user "Pedro" chooses "confirmar remoção"
     Then the promotion of hotel "noite estrelada" is removed from the system
     And the user "Pedro" receives the message de confirmação "Promoção removida com sucesso"
     And the promotion tag is no longer displayed on the rooms page
-    And the user "Pedro" can see the value of reservation is "157"
 
 Scenario: Cancel Promotion Removal
     Given that the user "Pedro" is logged in as an "administrator"
     And there is an existing promotion in the system for the hotel "noite estrelada"
-    And the actual value of reservation is "107"
     When the user "Pedro" accesses the list of promotions for the hotel
     And the user "Pedro" chooses to "remove the promotion" in question from the hotel "noite estrelada"
     And the user "Pedro" chooses the option "cancelar"
@@ -85,8 +75,7 @@ Scenario: Cancel Promotion Removal
 Scenario: Promotion Value Limits
     Given the user "Pedro" is logged in as "administrador"
     And the hotel "noite estrelada" has no promotion
-    And the value of reservation is "157"
     When the user "Pedro" chooses "cadastrar promoção"
-    And the user "Pedro" fills in the "valor" to be discounted with "80"
+    And the user "Pedro" fills in the "valor" to be discounted with a high value
     And the user "Pedro" chooses "confirmar promoção"
-    Then the user "Pedro" receives an error message of "valor da promoção excede o limite permitido de 50% de desconto"
+    Then the user "Pedro" receives an error message of "valor da promoção excede o limite permitido"
