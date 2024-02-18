@@ -25,7 +25,7 @@ class PromotionService(PromotionServiceMeta):
     def add_promotion(promotion_request: PromotionModel) -> HttpResponseModel:
         """Add promotion in hotel method implementation"""
         if promotion_request.adm:
-            if promotion_request.discountValue > 1 or promotion_request.discountValue >= (promotion_request.reservationValue * 0.5) or promotion_request.discountValue == None:
+            if promotion_request.discountValue > 1 and promotion_request.discountValue >= (promotion_request.reservationValue * 0.5) and promotion_request.discountValue == None:
                 item = db.insert_promotion('promotions', promotion_request.dict())
                 if not item:
                     return HttpResponseModel(
@@ -60,7 +60,7 @@ class PromotionService(PromotionServiceMeta):
                     status_code=HTTPResponses.ITEM_NOT_FOUND().status_code,
                 )
             else:
-                if promotion_request.newDiscountValue > 1 or promotion_request.newDiscountValue >= (hotel_discount * 0.5) or promotion_request.newDiscountValue == None:
+                if promotion_request.newDiscountValue > 1 and promotion_request.newDiscountValue >= (hotel_discount * 0.5) and promotion_request.newDiscountValue == None:
                     item = db.update_promotion(promotion_request.hotel, promotion_request.newDiscountValue)
                     if not item:
                         return HttpResponseModel(
