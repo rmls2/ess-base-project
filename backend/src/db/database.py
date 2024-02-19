@@ -152,15 +152,6 @@ class Database():
         collection: Collection = self.db[collection_name]
 
         item = collection.find_one({"room_id": str(room_id)})
-        return {
-            "reservationValue": item["reservationValue"],
-            "newValue": item["reservationValue"] - item["discountValue"]
-        }
-
-    def get_current_discount_value_by_room_id(self, collection_name: str, room_id: str) -> dict:
-        collection: Collection = self.db[collection_name]
-        item = collection.find_one({"room_id": str(room_id)})
-        
         return item
 
     def insert_item(self, collection_name: str, item: dict) -> dict:
@@ -200,18 +191,15 @@ class Database():
         collection.insert_one(item)
         return item
 
-    def update_promotion(self, hotel_name: str, new_value: float) -> dict:
+    def update_promotion(self, room_id: str, new_value: float) -> dict:
         collection: Collection = self.db["promotions"]
-        filter = {"hotel": hotel_name}
+        filter = {"room_id": room_id}
 
         update = {"$set": {"discountValue": new_value}}
 
         hotel_with_promotion = collection.find_one_and_update(filter, update, return_document=True)
 
-        return {
-            "id": str(hotel_with_promotion['_id']),
-            **hotel_with_promotion
-        }
+        return hotel_with_promotion
     
     def find_hotel_by_room_id(self, room_id: str) -> dict :
         collection: Collection = self.db["promotions"]
@@ -219,14 +207,14 @@ class Database():
         item = collection.find_one(filter)
         return item
     
-    def delete_promotion(self, hotel_name: str) -> dict:
+    def delete_promotion(self, room_id: str) -> dict:
         collection: Collection = self.db["promotions"]
-        filter = {"hotel": hotel_name}
+        filter = {"room_id": room_id}
 
         hotel_with_promotion = collection.delete_one(filter)
 
         return {
-            "hotel_name": hotel_name,
+            "room_id": room_id,
             "count": str(hotel_with_promotion.deleted_count)
         }
 

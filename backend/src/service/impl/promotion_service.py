@@ -15,16 +15,20 @@ class PromotionService(PromotionServiceMeta):
                 status_code=HTTPResponses.PROMOTION_NOT_FOUND().status_code,
             )
         else:
+            value = {
+                "reservationValue": item["reservationValue"],
+                "newValue": item["reservationValue"] - item["discountValue"]
+            }
             return HttpResponseModel(
                     message=HTTPResponses.PROMOTION_FOUND().message,
                     status_code=HTTPResponses.PROMOTION_FOUND().status_code,
-                    data=item,
+                    data=value,
                 )
 
     @staticmethod
     def get_current_discount_value(room_id: str) -> HttpResponseModel:
         """Get current discount value by room id method implementation"""
-        item = db.get_current_discount_value_by_room_id('promotions', room_id)
+        item = db.get_value_by_room_id('promotions', room_id)
         if not item:
             return HttpResponseModel(
                 message=HTTPResponses.PROMOTION_NOT_FOUND().message,
@@ -36,7 +40,7 @@ class PromotionService(PromotionServiceMeta):
             return HttpResponseModel(
                     message=HTTPResponses.PROMOTION_FOUND().message,
                     status_code=HTTPResponses.PROMOTION_FOUND().status_code,
-                    data=item,
+                    data=value,
                 )
 
     @staticmethod
@@ -79,7 +83,7 @@ class PromotionService(PromotionServiceMeta):
                 )
             else:
                 if promotion_request.newDiscountValue > 0 and promotion_request.newDiscountValue <= (hotel_discount * 0.5) and promotion_request.newDiscountValue != None:
-                    item = db.update_promotion(promotion_request.hotel, promotion_request.newDiscountValue)
+                    item = db.update_promotion(promotion_request.room_id, promotion_request.newDiscountValue)
                     if not item:
                         return HttpResponseModel(
                             message=HTTPResponses.PROMOTION_NOT_UPDATED().message,
@@ -114,7 +118,7 @@ class PromotionService(PromotionServiceMeta):
                 )
             else:
                 hotel_discount["_id"] = str(hotel_discount["_id"])
-                hotel_removed = db.delete_promotion(hotel_discount["hotel"])
+                hotel_removed = db.delete_promotion(hotel_discount["room_id"])
                 return HttpResponseModel(
                             message=HTTPResponses.PROMOTION_DELETED().message,
                             status_code=HTTPResponses.PROMOTION_DELETED().status_code,
