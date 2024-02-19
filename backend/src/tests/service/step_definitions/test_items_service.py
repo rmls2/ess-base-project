@@ -35,8 +35,8 @@ def get_item(context, item_id: str):
     target_fixture="context"
 )
 def check_received_item(context, item_name: str, item_id: str):
-    assert context['item'].data.name == item_name
-    assert context['item'].data.id == item_id
+    assert context['item'].data['name'] == item_name
+    assert context['item'].data['id'] == item_id
 
     return context
 
@@ -68,7 +68,7 @@ def get_service_items(context):
     return context
 
 @then(
-    parsers.cfparse('o item retornado deve ter o nome "{item_name}" e id "{item_id}"'), 
+    parsers.cfparse('o array retornado deve conter o item de nome "{item_name}" e id "{item_id}"'), 
     target_fixture="context"
 )
 def check_service_list(context, item_id: str, item_name: str):

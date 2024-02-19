@@ -1,0 +1,36 @@
+{
+    "cartoes": [
+        {
+            "cpf": "00000000000",
+            "nome_c": "cartao_1",
+            "numero_c": "1234123412341234",
+            "data_c": "1034",
+            "cvv": "123",
+            "tipo_c": true
+        },
+        {
+            "cpf": "10000000000",
+            "nome_c": "cartao_1",
+            "numero_c": "2234123412341234",
+            "data_c": "1134",
+            "cvv": "200",
+            "tipo_c": false
+        },
+        {
+            "cpf": "20000000000",
+            "nome_c": "cartao_1",
+            "numero_c": "3234123412341234",
+            "data_c": "1234",
+            "cvv": "300",
+            "tipo_c": true
+        },
+        {
+            "cpf": "123",
+            "nome_c": "cartao2",
+            "numero_c": "2345",
+            "data_c": "0131",
+            "cvv": "277",
+            "tipo_c": true
+        }
+    ]
+}
