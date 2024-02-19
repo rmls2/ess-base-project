@@ -32,6 +32,47 @@ class HTTPResponses:
             message="Item created",
             status_code=201,
         )
+    @staticmethod
+    def REVIEW_CREATED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Review created",
+            status_code=201,
+        )
+
+    @staticmethod
+    def REVIEW_NOT_CREATED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Review não criada",
+            status_code=400,
+        )
+    
+    @staticmethod
+    def REVIEW_UPDATED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Review atualizada",
+            status_code=200,
+        )
+
+    @staticmethod
+    def REVIEW_NOT_UPDATED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Review não atualizada",
+            status_code=400,
+        )
+
+    @staticmethod
+    def REVIEW_DELETED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Review deletada",
+            status_code=200,
+        )
+
+    @staticmethod
+    def REVIEW_NOT_DELETED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Review não deletada",
+            status_code=400,
+        )
 
     @staticmethod
     def SERVER_ERROR() -> HttpResponseModel:

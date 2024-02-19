@@ -4,6 +4,7 @@ from pymongo import MongoClient, errors
 from pymongo.collection import Collection, IndexModel
 from src.config.config import env
 from logging import INFO, WARNING, getLogger
+from bson import ObjectId
 
 logger = getLogger('uvicorn')
 
@@ -147,6 +148,28 @@ class Database():
         item = collection.find_one({"id": str(item_id)}, {"_id": 0})
         return item
 
+
+    def get_item_by_attraction_id(self, collection_name: str, attraction_id: str):
+        collection: Collection = self.db[collection_name]
+
+        item = collection.find_onde({"attraction_id": str(attraction_id)})
+        return {
+            "images": item["images"],
+            "generalInfo": item["generalInfo"],
+            "price": item["price"],
+            "reviews": item["reviews"],
+            "relatedAttractions": item["relatedAttraction"]
+        }
+
+    def get_item_by_review_id(self, collection_name: str, review_id: str):
+        collection: Collection = self.db[collection_name]
+
+        item = collection.find_onde({"review_id": str(review_id)})
+        return {
+            "quality": item["quality"],
+            "price": item["price"]
+        }
+
     def insert_item(self, collection_name: str, item: dict) -> dict:
         """
         Insert an item into a collection
@@ -172,6 +195,49 @@ class Database():
         return {
             "id": str(item_id),
             **item
+        }
+
+    def insert_review(self, collection_name: str, item: dict) -> dict:
+        item["_id"] = ObjectId()
+        item["review_id"] = str(uuid4())[:self.ID_LENGTH]
+
+        collection: Collection = self.db[collection_name]
+
+        item_id = collection.insert_one(item).inserted_id
+        return {
+            "id": str(item_id),
+            **item
+        }
+    
+    def update_review(self, attraction_name: str, user_name:str, new_quality: float, new_price: float) -> dict:
+        collection: Collection = self.db["reviews"]
+        filter = {"attraction": attraction_name, "user": user_name}
+
+        update = {"$set": {"quality": new_quality, "price": new_price}}
+
+        review = collection.find_one_and_update(filter, update, return_document=True)
+
+        return {
+            "id": str(review['_id']),
+            **review
+        }
+
+    def find_review_by_name(self, attraction_name: str, user_name: str) -> dict :
+        collection: Collection = self.db["reviews"]
+        filter = {"attraction": attraction_name, "user": user_name}
+        item = collection.find_onde(filter)
+        return item
+
+    def delete_review(self, attraction_name: str, user_name: str) -> dict:
+        collection: Collection = self.db["reviews"]
+        filter = {"attraction": attraction_name, "user": user_name}
+
+        review = collection.delete_one(filter)
+
+        return {
+            "attraction_name": attraction_name,
+            "user_name": user_name,
+            "count": str(review.deleted_count)
         }
 
     # TODO: implement update_item method
