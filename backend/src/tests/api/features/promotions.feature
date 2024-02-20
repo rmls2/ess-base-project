@@ -34,7 +34,7 @@ Feature: Promoções API
         Given a solicitação para registrar uma nova promoção é inválida
         When uma requisição "POST" é enviada para "promotions/register" com discountValue negativo
         Then o status da resposta deve ser "422"
-        And o JSON da resposta deve conter a mensagem de erro "Promoção não criada"
+        And o JSON da resposta deve conter a mensagem de erro "Promotion not created"
     
     Scenario: Tentar registrar uma nova promoção com discountValue null
         Given a solicitação para registrar uma nova promoção é inválida

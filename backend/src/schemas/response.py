@@ -71,36 +71,76 @@ class HTTPResponses:
     @staticmethod
     def PROMOTION_CREATED() -> HttpResponseModel:
         return HttpResponseModel(
-            message="Promoção cadastrada",
+            message="Promotion created",
+            status_code=201,
+        )
+    
+    @staticmethod
+    def REVIEW_CREATED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Review created",
             status_code=201,
         )
 
     @staticmethod
     def PROMOTION_NOT_CREATED() -> HttpResponseModel:
         return HttpResponseModel(
-            message="Promoção não criada",
+            message="Promotion not created",
             status_code=422,
         )
     
     @staticmethod
     def PROMOTION_UPDATED() -> HttpResponseModel:
         return HttpResponseModel(
-            message="Promoção atualizada",
+            message="Promotion updated",
+            status_code=200,
+        )
+
+    def REVIEW_NOT_CREATED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Review não criada",
+            status_code=400,
+        )
+    
+    @staticmethod
+    def REVIEW_UPDATED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Review atualizada",
             status_code=200,
         )
 
     @staticmethod
     def PROMOTION_NOT_UPDATED() -> HttpResponseModel:
         return HttpResponseModel(
-            message="Promoção não atualizada",
+            message="Promotion not updated",
             status_code=422,
         )
     
     @staticmethod
     def PROMOTION_DELETED() -> HttpResponseModel:
         return HttpResponseModel(
-            message="Promoção deletada",
+            message="Promotion deleted",
             status_code=200,
+        )
+
+    def REVIEW_NOT_UPDATED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Review não atualizada",
+            status_code=400,
+        )
+
+    @staticmethod
+    def REVIEW_DELETED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Review deletada",
+            status_code=200,
+        )
+
+    @staticmethod
+    def REVIEW_NOT_DELETED() -> HttpResponseModel:
+        return HttpResponseModel(
+            message="Review não deletada",
+            status_code=400,
         )
 
     @staticmethod
