@@ -6,4 +6,17 @@ class AttractionServiceMeta(ABC):
     def get_attraction(self) -> AttractionModel:
         """Get item by id method definition"""
         pass
+
+    @abstractmethod
+    def get_images(self) -> AttractionModel:
+        """Get item by id method definition"""
+        pass
+    
+
+    @abstractmethod
+    def get_reviews(self) -> AttractionModel:
+        """Get item by id method definition"""
+        pass
+    
+
     
