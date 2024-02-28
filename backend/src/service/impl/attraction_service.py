@@ -39,7 +39,7 @@ class AttractionService(AttractionServiceMeta):
                 )
 
     @staticmethod
-    def get_attraction(attraction_id: str) -> HttpResponseModel:
+    def get_reviews(attraction_id: str) -> HttpResponseModel:
         """ Get all reviews by attraction id method implementation"""
         attraction = db.get_item_by_attraction_id("attraction", attraction_id)
         item = attraction["reviews"]
