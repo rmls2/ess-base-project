@@ -9,8 +9,6 @@ class ReviewModel(BaseModel):
 class ReviewUpdateModel(BaseModel):
     user: str
     attraction: str
-    currentQuality: int
-    currentPrice: int
     newQuality: int
     newPrice: int
 
