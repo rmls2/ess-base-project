@@ -3,6 +3,8 @@ from pytest_bdd import parsers, given, when, then, scenario
 from src.service.impl.promotion_service import PromotionService
 from src.tests.api.utils.utils import get_response_items_list, req_type_to_function
 
+# Rodar testes individualmente
+
 @scenario(
     scenario_name="Obter uma promoção por ID do quarto",
     feature_name="../features/promotions.feature"
