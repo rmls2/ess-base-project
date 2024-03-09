@@ -1,7 +1,7 @@
 from src.schemas.response import HTTPResponses, HttpResponseModel
 from src.service.meta.promotion_service_meta import PromotionServiceMeta
 from src.db.__init__ import database as db
-from src.schemas.promotion import PromotionModel, PromotionUpdateModel, PromotionDeleteModel
+from src.schemas.promotion import PromotionModel, PromotionUpdateModel
 
 
 class PromotionService(PromotionServiceMeta):
@@ -46,7 +46,7 @@ class PromotionService(PromotionServiceMeta):
     @staticmethod
     def add_promotion(promotion_request: PromotionModel) -> HttpResponseModel:
         """Add promotion in hotel method implementation"""
-        if promotion_request.adm:
+        if db.check_if_key_is_adm(promotion_request.adm_key):
             if promotion_request.discountValue > 0 and promotion_request.discountValue <= (promotion_request.reservationValue * 0.5) and promotion_request.discountValue != None:
                 item = db.insert_promotion('promotions', promotion_request.dict(), promotion_request.room_id)
                 if not item:
@@ -74,7 +74,7 @@ class PromotionService(PromotionServiceMeta):
     @staticmethod
     def update_promotion(promotion_request: PromotionUpdateModel) -> HttpResponseModel:
         """Update promotion in hotel method implementation"""
-        if promotion_request.adm:
+        if db.check_if_key_is_adm(promotion_request.adm_key):
             hotel_discount = db.find_hotel_by_room_id(promotion_request.room_id)["reservationValue"]
             if not hotel_discount:
                 return HttpResponseModel(
@@ -107,10 +107,10 @@ class PromotionService(PromotionServiceMeta):
             )
         
     @staticmethod
-    def delete_promotion(promotion_request: PromotionDeleteModel) -> HttpResponseModel:
+    def delete_promotion(key: str, room_id: str) -> HttpResponseModel:
         """Delete a promotion in hotel method implementation"""
-        if promotion_request.adm:
-            hotel_discount = db.find_hotel_by_room_id(promotion_request.room_id)
+        if db.check_if_key_is_adm(key):
+            hotel_discount = db.find_hotel_by_room_id(room_id)
             if not hotel_discount:
                 return HttpResponseModel(
                     message=HTTPResponses.PROMOTION_NOT_FOUND().message,

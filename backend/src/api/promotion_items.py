@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status
 from src.schemas.response import HttpResponseModel
-from src.schemas.promotion import PromotionModel, PromotionUpdateModel, PromotionDeleteModel
+from src.schemas.promotion import PromotionModel, PromotionUpdateModel
 from src.service.impl.promotion_service import PromotionService 
 
 router = APIRouter()
@@ -86,7 +86,7 @@ def update_promotion(promotion_request: PromotionUpdateModel) -> HttpResponseMod
     return item_get_response
 
 @router.delete(
-    "/delete",
+    "/delete/{key}/{room_id}",
     response_model=HttpResponseModel,
     status_code=status.HTTP_200_OK,
     description="Delete a promotion in a hotel",
@@ -101,6 +101,6 @@ def update_promotion(promotion_request: PromotionUpdateModel) -> HttpResponseMod
         }
     },
 )
-def delete_promotion(promotion_request: PromotionDeleteModel) -> HttpResponseModel:
-    item_get_response = PromotionService.delete_promotion(promotion_request)
+def delete_promotion(key: str, room_id: str) -> HttpResponseModel:
+    item_get_response = PromotionService.delete_promotion(key, room_id)
     return item_get_response

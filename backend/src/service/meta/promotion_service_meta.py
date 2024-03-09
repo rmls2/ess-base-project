@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from src.schemas.promotion import PromotionModel, PromotionUpdateModel, PromotionDeleteModel
+from src.schemas.promotion import PromotionModel, PromotionUpdateModel
 
 class PromotionServiceMeta(ABC):
     @abstractmethod
@@ -22,6 +22,6 @@ class PromotionServiceMeta(ABC):
         pass
 
     @abstractmethod
-    def delete_promotion(promotion_request: PromotionDeleteModel):
+    def delete_promotion(key: str, room_id: str):
         """Delete a promotion in hotel method implementation"""
         pass
