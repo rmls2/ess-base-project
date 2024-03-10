@@ -42,6 +42,22 @@ class PromotionService(PromotionServiceMeta):
                     status_code=HTTPResponses.PROMOTION_FOUND().status_code,
                     data=value,
                 )
+        
+    @staticmethod
+    def get_room_id(room_name: str) -> HttpResponseModel:
+        item = db.get_room_id_by_room_name(room_name)
+        if not item:
+            return HttpResponseModel(
+                message=HTTPResponses.ITEM_NOT_FOUND().message,
+                status_code=HTTPResponses.ITEM_NOT_FOUND().status_code,
+            )
+        else:
+            value = {"room_id": item}
+            return HttpResponseModel(
+                    message=HTTPResponses.ITEM_FOUND().message,
+                    status_code=HTTPResponses.ITEM_FOUND().status_code,
+                    data=value,
+                )
 
     @staticmethod
     def add_promotion(promotion_request: PromotionModel) -> HttpResponseModel:

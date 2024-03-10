@@ -45,6 +45,26 @@ def get_current_discount_value (room_id: str) -> HttpResponseModel:
     item_get_response = PromotionService.get_current_discount_value(room_id)
     return item_get_response
 
+@router.get(
+    "/hotel/{room_name}",
+    response_model=HttpResponseModel,
+    status_code=status.HTTP_200_OK,
+    description="Retrieve the room ID",
+    tags=["promotions"],
+    responses={
+        status.HTTP_200_OK: {
+            "model": HttpResponseModel,
+            "description": "Successfully got room id by name",
+        },
+        status.HTTP_404_NOT_FOUND: {
+            "description": "Room ID not found",
+        }
+    },
+)
+def get_room_id(room_name: str) -> HttpResponseModel:
+    room_get_response = PromotionService.get_room_id(room_name)
+    return room_get_response
+
 @router.post(
     "/register",
     response_model=HttpResponseModel,

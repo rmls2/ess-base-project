@@ -154,6 +154,18 @@ class Database():
         if adm: return True
         else: return False
 
+    def get_room_id_by_room_name(self, room_name: str) -> str:
+        collection: Collection = self.db["hotels"]
+
+        original = room_name
+        room_name_transformed = original.replace(' ', '_')
+
+        room = collection.find_one({f'rooms.{room_name_transformed}.name': room_name})
+        if room:
+            return room['rooms'][room_name_transformed]['id']
+        else:
+            return None
+
                 
     def get_value_by_room_id(self, collection_name: str, room_id: str) -> dict:
         collection: Collection = self.db[collection_name]
