@@ -147,6 +147,13 @@ class Database():
 
         item = collection.find_one({"id": str(item_id)})
         return item
+    
+    def check_if_key_is_adm(self, key: str) -> dict :
+        collection: Collection = self.db["admin-users"]
+        adm = collection.find_one({"key": key})
+        if adm: return True
+        else: return False
+
                 
     def get_value_by_room_id(self, collection_name: str, room_id: str) -> dict:
         collection: Collection = self.db[collection_name]
