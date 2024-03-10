@@ -59,7 +59,7 @@
               <div :class="$style.frameTriplet" />
               <div :class="$style.rectangleGroup">
                 <div :class="$style.frameItem" />
-                <h1 :class="$style.noiteEstrelada">QUARTO COMETA</h1>
+                <h1 :class="$style.noiteEstrelada" ref="quartoCometaRef">QUARTO COMETA</h1>
               </div>
               <img :class="$style.frameInner" loading="lazy" alt="" src="../../assets/promotions/group-65.svg" />
             </div>
@@ -74,7 +74,7 @@
                     </div>
                   </div>
                 </div>
-                <button :class="$style.cadastrarPromooWrapper" @click="onGroupButtonClick">
+                <button v-if="mostrarBotaoCadastro" :class="$style.cadastrarPromooWrapper" @click="onGroupButtonClick">
                   <div :class="$style.cadastrarPromoo">
                     <img :class="$style.cadastrarPromooChild" alt="" src="../../assets/promotions/rectangle-1091.svg" />
                     <b :class="$style.cadastrarPromoo1">Cadastrar promoção</b>
@@ -218,10 +218,34 @@
   </div>
 </template>
 <script lang="ts">
+import { useApiService, PromotionModel, PromotionUpdateModel } from '../../services/apiService';
 import { defineComponent } from "vue";
+
+const { getPromotion, getCurrentPromotion, getRoomId, createPromotion, updatePromotion, deletePromotion } = useApiService();
 
 export default defineComponent({
   name: "Quartos",
+  data() {
+    return {
+      mostrarBotaoCadastro: false,
+    };
+  },
+  async mounted() {
+    try {
+      // Implemente a lógica de verificação na API durante o mounted
+      const quartoCometaElement = this.$refs.quartoCometaRef.innerText.toLowerCase();
+      const roomId = (await getRoomId(quartoCometaElement)).data.room_id
+      const resultadoVerificacao = await getPromotion(roomId);
+      var ver = false
+      if (resultadoVerificacao.data){
+        ver = true
+      }
+      // Defina mostrarBotaoCadastro com base no resultado da verificação
+      this.mostrarBotaoCadastro = ver;
+    } catch (error) {
+      console.error("Erro ao verificar promoção durante o mounted:", error);
+    }
+  },
   methods: {
     onAtraesTextClick() {
       // Please sync "Atração Desktop" to the project
@@ -229,6 +253,9 @@ export default defineComponent({
     onGroupButtonClick() {
       // Please sync "Promoção" to the project
     },
+    putRoomValue(){
+      
+    }
   },
 });
 </script>

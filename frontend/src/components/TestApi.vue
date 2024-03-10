@@ -37,7 +37,7 @@ export default {
         const responseDataDelete = ref<string>('');
 
         const addTask = async () => {
-            const data = await getPromotion();
+            const data = await getPromotion('');
             responseData.value = data.data.newValue;
         }
 

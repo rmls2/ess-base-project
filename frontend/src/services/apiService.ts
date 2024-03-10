@@ -23,10 +23,30 @@ export interface PromotionUpdateModel {
 export function useApiService() {
   const baseUrl = 'http://127.0.0.1:8000'; // Replace with your API URL
 
-  async function getPromotion() {
+  async function getPromotion(room_id: string) {
     try {
-      const response = await axios.get(`${baseUrl}/promotions/womrjatajDEa1X0as0W7lVVa`);
-      return response.data;
+      const response = await axios.get(`${baseUrl}/promotions/${room_id}`);
+      return response;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error;
+    }
+  }
+
+  async function getCurrentPromotion(room_id: string) {
+    try {
+      const response = await axios.get(`${baseUrl}/promotions/${room_id}/current`);
+      return response;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error;
+    }
+  }
+
+  async function getRoomId(room_name: string) {
+    try {
+      const response = await axios.get(`${baseUrl}/promotions/hotel/${room_name}`);
+      return response;
     } catch (error) {
       console.error('Error fetching data:', error);
       throw error;
@@ -65,6 +85,8 @@ export function useApiService() {
 
   return {
     getPromotion,
+    getCurrentPromotion,
+    getRoomId,
     createPromotion,
     updatePromotion,
     deletePromotion
