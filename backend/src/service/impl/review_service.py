@@ -4,6 +4,22 @@ from src.db.__init__ import database as db
 from src.schemas.reviews import ReviewModel, ReviewUpdateModel, ReviewDeleteModel
 
 class ReviewService(ReviewServiceMeta):
+    
+    @staticmethod
+    def get_all() -> HttpResponseModel:
+        item = db.getallreview("Reviews")
+        if item == None:
+            return HttpResponseModel(
+                message=HTTPResponses.ITEM_NOT_FOUND().message,
+                status_code=HTTPResponses.ITEM_NOT_FOUND().status_code,
+            )
+        else:
+            return HttpResponseModel(
+                    message=HTTPResponses.ITEM_FOUND().message,
+                    status_code=HTTPResponses.ITEM_FOUND().status_code,
+                    data=item,
+                )
+        
     @staticmethod
     def get_review(review_id: str) -> HttpResponseModel:
         """Get review by review id method implementation"""
@@ -42,7 +58,6 @@ class ReviewService(ReviewServiceMeta):
         return HttpResponseModel(
                 message=HTTPResponses.REVIEW_CREATED().message,
                 status_code=HTTPResponses.REVIEW_CREATED().status_code,
-                data=item,
             )
         
 
@@ -66,13 +81,12 @@ class ReviewService(ReviewServiceMeta):
             return HttpResponseModel(
                     message=HTTPResponses.REVIEW_UPDATED().message,
                     status_code=HTTPResponses.REVIEW_UPDATED().status_code,
-                    data=item,
                 ) 
     
     @staticmethod
     def delete_review(review_request: ReviewDeleteModel) -> HttpResponseModel:
         """Delete a review in attraction method implementation"""
-        review = db.find_review_by_name(review_request.attraction, review_request.user)
+        review = db.get_item_by_review_id(review_request.review_id)
         if not review:
             return HttpResponseModel(
                 message=HTTPResponses.ITEM_NOT_FOUND().message,
@@ -84,5 +98,4 @@ class ReviewService(ReviewServiceMeta):
             return HttpResponseModel(
                         message=HTTPResponses.REVIEW_DELETED().message,
                         status_code=HTTPResponses.REVIEW_DELETED().status_code,
-                        data=review_removed,
                     )

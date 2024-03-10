@@ -161,6 +161,11 @@ class Database():
             "relatedAttractions": item["relatedAttraction"]
         }
 
+    def getallreview(self, collection_name: str):
+        collection: Collection = self.db[collection_name]
+
+        return list(collection.find({}, {"_id": 0}))
+
     def get_item_by_review_id(self, collection_name: str, review_id: str):
         collection: Collection = self.db[collection_name]
 
