@@ -5,7 +5,7 @@
       <img :class="$style.maskGroupIcon" alt="" src="../assets/rooms/mask-group@2x.png" />
       <div :class="$style.rectangleShapes">
         <h1 :class="$style.bemVindoA">Bem vindo a</h1>
-        <h1 :class="$style.hotelaria">HOTELARIA</h1>
+        <h1 :class="$style.hotelaria">NOITE ESTRELADA</h1>
       </div>
       <div :class="$style.starFrame">
         <div :class="$style.scrollParent">
