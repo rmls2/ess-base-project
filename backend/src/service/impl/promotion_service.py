@@ -46,18 +46,17 @@ class PromotionService(PromotionServiceMeta):
     @staticmethod
     def get_room_id(room_name: str, adm_key: str) -> HttpResponseModel:
         if db.check_if_key_is_adm(adm_key):
-            item = db.get_room_id_by_room_name(room_name)
-            if not item:
+            room = db.get_room_id_by_room_name(room_name)
+            if not room:
                 return HttpResponseModel(
                     message=HTTPResponses.ITEM_NOT_FOUND().message,
                     status_code=HTTPResponses.ITEM_NOT_FOUND().status_code,
                 )
             else:
-                value = {"room_id": item}
                 return HttpResponseModel(
                         message=HTTPResponses.ITEM_FOUND().message,
                         status_code=HTTPResponses.ITEM_FOUND().status_code,
-                        data=value,
+                        data=room,
                     )
         else:
            return HttpResponseModel(

@@ -154,7 +154,7 @@ class Database():
         if adm: return True
         else: return False
 
-    def get_room_id_by_room_name(self, room_name: str) -> str:
+    def get_room_id_by_room_name(self, room_name: str) -> dict:
         collection: Collection = self.db["hotels"]
 
         original = room_name
@@ -162,7 +162,7 @@ class Database():
 
         room = collection.find_one({f'rooms.{room_name_transformed}.name': room_name})
         if room:
-            return room['rooms'][room_name_transformed]['id']
+            return room['rooms'][room_name_transformed]
         else:
             return None
 

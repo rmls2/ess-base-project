@@ -45,7 +45,7 @@ export function useApiService() {
 
   async function getRoomId(room_name: string) {
     try {
-      const response = await axios.get(`${baseUrl}/promotions/hotel/${room_name}`);
+      const response = await axios.get(`${baseUrl}/promotions/hotel/${room_name}/879456`);
       return response;
     } catch (error) {
       console.error('Error fetching data:', error);

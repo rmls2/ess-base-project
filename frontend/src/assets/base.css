@@ -47,6 +47,7 @@
   --color-gray-400: rgba(20, 39, 74, 0.2);
   --color-saddlebrown-100: #8b4513;
   --color-saddlebrown-200: rgba(139, 69, 19, 0.2);
+  --color-error: #9e1b04;
 
   /* Gaps */
   --gap-18xl: 37px;
