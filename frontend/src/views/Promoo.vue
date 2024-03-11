@@ -142,13 +142,13 @@ export default defineComponent({
         const promotionUpdate = (await updatePromotion(promotioUpdateData)).data.data;
         console.log(promotionUpdate)
         if (promotionUpdate) {
-          alert('Atualizado')
+          console.log('Atualizado')
         } else {
           this.errorMsg = 'Valor de desconto inválido'
         }
 
         return {
-          promotionCreate
+          promotionUpdate
         }
       } else {
         const promotionData: PromotionModel = {
@@ -162,7 +162,7 @@ export default defineComponent({
 
         const promotionCreate = (await createPromotion(promotionData)).data.data;
         if (promotionCreate) {
-          alert('Cadastrado')
+          console.log('Cadastrado')
         } else {
           this.errorMsg = 'Valor de desconto inválido'
         }
