@@ -9,9 +9,9 @@
                         <RouterLink to="/rooms-page" :class="$style.cancelarBtn">cancelar</RouterLink>
                         <span :class="$style.span"> </span>
                     </div>
-                    <RouterLink to="/rooms-page" :class="$style.confirmar" @click="onConfirmarTextClick">
+                    <b :class="$style.confirmar" @click="onConfirmarTextClick">
                         confirmar
-                    </RouterLink>
+                    </b>
                 </div>
             </div>
         </div>
@@ -34,7 +34,7 @@ export default defineComponent({
             try{
                 const room_id = this.$route.params.id;
                 const promotion = await deletePromotion(room_id);
-                alert(promotion.data.data.count)
+                this.$router.push('/rooms-page');
             } catch (error) {
                 console.error("Erro ao verificar promoção durante o mounted:", error);
             }

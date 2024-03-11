@@ -166,7 +166,7 @@ export default defineComponent({
         } else {
           this.errorMsg = 'Valor de desconto inválido'
         }
-
+        this.$router.push('/rooms-page');
         return {
           promotionCreate
         }
