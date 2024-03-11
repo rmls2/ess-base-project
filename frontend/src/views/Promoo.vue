@@ -143,6 +143,7 @@ export default defineComponent({
         console.log(promotionUpdate)
         if (promotionUpdate) {
           console.log('Atualizado')
+          this.$router.push('/rooms-page');
         } else {
           this.errorMsg = 'Valor de desconto inválido'
         }
@@ -163,10 +164,10 @@ export default defineComponent({
         const promotionCreate = (await createPromotion(promotionData)).data.data;
         if (promotionCreate) {
           console.log('Cadastrado')
+          this.$router.push('/rooms-page');
         } else {
           this.errorMsg = 'Valor de desconto inválido'
         }
-        this.$router.push('/rooms-page');
         return {
           promotionCreate
         }
