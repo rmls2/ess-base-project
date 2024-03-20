@@ -55,5 +55,19 @@ class AttractionService(AttractionServiceMeta):
                     data=item,
                 )
 
+    @staticmethod
+    def add_attraction(attractionrequest: AttractionModel) -> HttpResponseModel:
+        """ Create a attraction method implementation"""
+        item = db.insert_item("attraction", attractionrequest.model_dump())
+        if not item:
+            return HttpResponseModel(
+                message=HTTPResponses.ITEM_CREATED().message,
+                status_code=HTTPResponses.ITEM_CREATED().status_code
+            )
+        item["_id"] = str(item["_id"])
+        return HttpResponseModel(
+            message=HTTPResponses.ITEM_CREATED().message,
+            status_code=HTTPResponses.ITEM_CREATED().status_code
+        )
 
 

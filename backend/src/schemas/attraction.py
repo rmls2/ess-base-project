@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from src.schemas import reviews
 
 class AttractionModel(BaseModel):
-    user: str
+    attraction_id: str
     name: str
     images: list[str] 
     generalInfo: list[str]

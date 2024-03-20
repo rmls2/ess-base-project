@@ -154,6 +154,7 @@ class Database():
 
         item = collection.find_one({"attraction_id": str(attraction_id)})
         return {
+            "name": ["name"],
             "images": item["images"],
             "generalInfo": item["generalInfo"],
             "price": item["price"],
@@ -195,7 +196,8 @@ class Database():
         """
         # TODO: test if this method works
 
-        item["id"] = str(uuid4())[:self.ID_LENGTH]
+        item["id"] = ObjectId()
+        item["attraction"] = item["attraction_id"]
 
         collection: Collection = self.db[collection_name]
 

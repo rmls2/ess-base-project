@@ -70,6 +70,24 @@ def get_reviews(attraction_id: str) -> HttpResponseModel:
     return item_get_response
 
 
+@router.post(
+    "/post_attraction",
+    response_model=HttpResponseModel,
+    status_code=status.HTTP_201_CREATED,
+    description="create a attraction",
+    tags=["attractions"],
+    responses={
+        status.HTTP_201_CREATED: {
+            "model": HttpResponseModel,
+            "description": "Successfully created attraction",
+        },
+        status.HTTP_500_INTERNAL_SERVER_ERROR:{
+            "model": HttpResponseModel,
+            "description": "Error in creating attraction"
+        }
+    }
+)
 
-
-
+def add_attraction(attractionrequest: AttractionModel) -> HttpResponseModel:
+    item_get_response = AttractionService.add_attraction(attractionrequest)
+    return item_get_response
