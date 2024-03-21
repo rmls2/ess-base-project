@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap");
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
   --vt-c-white: #ffffff;
@@ -19,6 +20,84 @@
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+
+  /* fonts */
+  --font-montserrat: Montserrat;
+
+  /* font sizes */
+  --font-size-6xl: 25px;
+  --font-size-xl: 20px;
+  --font-size-41xl: 60px;
+  --font-size-29xl: 48px;
+  --font-size-17xl: 36px;
+  --font-size-135xl: 154px;
+  --font-size-43xl: 62px;
+  --font-size-19xl: 38px;
+  --font-size-31xl: 50px;
+  --font-size-21xl: 40px;
+  --font-size-11xl: 30px;
+  --font-size-5xl: 24px;
+  --font-size-lgi: 19px;
+
+  /* Colors */
+  --color-white: #fff;
+  --color-gray-100: #8f9779;
+  --color-gray-200: #14274a;
+  --color-gray-300: rgba(255, 255, 255, 0);
+  --color-gray-400: rgba(20, 39, 74, 0.2);
+  --color-saddlebrown-100: #8b4513;
+  --color-saddlebrown-200: rgba(139, 69, 19, 0.2);
+  --color-error: #9e1b04;
+
+  /* Gaps */
+  --gap-18xl: 37px;
+  --gap-55xl: 74px;
+  --gap-xl: 20px;
+  --gap-0: 0px;
+  --gap-60xl: 79px;
+  --gap-20xl: 39px;
+  --gap-124xl: 143px;
+  --gap-17xl: 36px;
+  --gap-52xl: 71px;
+  --gap-base-2: 15.2px;
+  --gap-22xl-3: 41.3px;
+  --gap-2xl: 21px;
+
+  /* Paddings */
+  --padding-xl: 20px;
+  --padding-59xl: 78px;
+  --padding-21xl: 40px;
+  --padding-2xs: 11px;
+  --padding-57xl: 76px;
+  --padding-22xl: 41px;
+  --padding-384xl: 403px;
+  --padding-56xl: 75px;
+  --padding-3xl: 22px;
+  --padding-60xl: 79px;
+  --padding-10xs: 3px;
+  --padding-11xs: 2px;
+  --padding-14xl: 33px;
+  --padding-32xl: 51px;
+  --padding-7xs: 6px;
+  --padding-19xl: 38px;
+  --padding-5xs: 8px;
+  --padding-2xs-2: 10.2px;
+  --padding-250xl: 269px;
+  --padding-156xl: 175px;
+  --padding-18xl-4: 37.4px;
+  --padding-4xs-9: 8.9px;
+  --padding-81xl: 100px;
+  --padding-6xl: 25px;
+  --padding-31xl: 50px;
+  --padding-sm: 14px;
+  --padding-49xl-9: 68.9px;
+  --padding-9xs: 4px;
+
+  /* Border radiuses */
+  --br-xs: 12px;
+  --br-10xs: 3px;
+  --br-mini: 15px;
+  --br-12xs: 1px;
 }
 
 /* semantic color variables for this project */
@@ -36,7 +115,7 @@
   --section-gap: 160px;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
     --color-background: var(--vt-c-black);
     --color-background-soft: var(--vt-c-black-soft);
@@ -71,3 +150,4 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+

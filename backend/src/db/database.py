@@ -145,7 +145,32 @@ class Database():
         """
         collection: Collection = self.db[collection_name]
 
-        item = collection.find_one({"id": str(item_id)}, {"_id": 0})
+        item = collection.find_one({"id": str(item_id)})
+        return item
+    
+    def check_if_key_is_adm(self, key: str) -> dict :
+        collection: Collection = self.db["admin-users"]
+        adm = collection.find_one({"key": key})
+        if adm: return True
+        else: return False
+
+    def get_room_id_by_room_name(self, room_name: str) -> dict:
+        collection: Collection = self.db["hotels"]
+
+        original = room_name
+        room_name_transformed = original.replace(' ', '_')
+
+        room = collection.find_one({f'rooms.{room_name_transformed}.name': room_name})
+        if room:
+            return room['rooms'][room_name_transformed]
+        else:
+            return None
+
+                
+    def get_value_by_room_id(self, collection_name: str, room_id: str) -> dict:
+        collection: Collection = self.db[collection_name]
+
+        item = collection.find_one({"room_id": str(room_id)})
         return item
 
 
@@ -196,8 +221,7 @@ class Database():
         """
         # TODO: test if this method works
 
-        item["id"] = ObjectId()
-        item["attraction"] = item["attraction_id"]
+        item["_id"] = ObjectId() 
 
         collection: Collection = self.db[collection_name]
 
@@ -205,6 +229,43 @@ class Database():
         return {
             "id": str(item_id),
             **item
+        }
+    
+    def insert_promotion(self, collection_name: str, item: dict, room_id: str) -> dict:
+
+        item["_id"] = ObjectId() 
+        item["room_id"] = room_id
+
+        collection: Collection = self.db[collection_name]
+
+        collection.insert_one(item)
+        return item
+
+    def update_promotion(self, room_id: str, new_value: float) -> dict:
+        collection: Collection = self.db["promotions"]
+        filter = {"room_id": room_id}
+
+        update = {"$set": {"discountValue": new_value}}
+
+        hotel_with_promotion = collection.find_one_and_update(filter, update, return_document=True)
+
+        return hotel_with_promotion
+    
+    def find_hotel_by_room_id(self, room_id: str) -> dict :
+        collection: Collection = self.db["promotions"]
+        filter = {"room_id": room_id}
+        item = collection.find_one(filter)
+        return item
+    
+    def delete_promotion(self, room_id: str) -> dict:
+        collection: Collection = self.db["promotions"]
+        filter = {"room_id": room_id}
+
+        hotel_with_promotion = collection.delete_one(filter)
+
+        return {
+            "room_id": room_id,
+            "count": str(hotel_with_promotion.deleted_count)
         }
 
     def insert_review(self, collection_name: str, item: dict) -> dict:
