@@ -4,10 +4,26 @@ from src.db.__init__ import database as db
 from src.schemas.reviews import ReviewModel, ReviewUpdateModel, ReviewDeleteModel
 
 class ReviewService(ReviewServiceMeta):
+    
+    @staticmethod
+    def get_all() -> HttpResponseModel:
+        item = db.getallreview("Reviews")
+        if item == None:
+            return HttpResponseModel(
+                message=HTTPResponses.ITEM_NOT_FOUND().message,
+                status_code=HTTPResponses.ITEM_NOT_FOUND().status_code,
+            )
+        else:
+            return HttpResponseModel(
+                    message=HTTPResponses.ITEM_FOUND().message,
+                    status_code=HTTPResponses.ITEM_FOUND().status_code,
+                    data=item,
+                )
+        
     @staticmethod
     def get_review(review_id: str) -> HttpResponseModel:
         """Get review by review id method implementation"""
-        item = db.get_item_by_review_id('reviews', review_id)
+        item = db.get_item_by_review_id('Reviews', review_id)
         if not item:
             return HttpResponseModel(
                 message=HTTPResponses.ITEM_NOT_FOUND().message,
@@ -23,6 +39,15 @@ class ReviewService(ReviewServiceMeta):
     @staticmethod
     def add_review(review_request: ReviewModel) -> HttpResponseModel:
         """Add review in attraction method implementation"""
+        # attraction = db.get_item_by_attraction_id("attraction", review_request["attraction"])
+        existing_review = db.find_review_by_name(review_request.attraction, review_request.user)
+
+        if existing_review:
+            return HttpResponseModel(
+                    message=HTTPResponses.REVIEW_NOT_CREATED().message,
+                    status_code=HTTPResponses.REVIEW_NOT_CREATED().status_code,
+                )
+        
         item = db.insert_review('Reviews', review_request.model_dump())
         if not item:
                 return HttpResponseModel(
@@ -33,16 +58,14 @@ class ReviewService(ReviewServiceMeta):
         return HttpResponseModel(
                 message=HTTPResponses.REVIEW_CREATED().message,
                 status_code=HTTPResponses.REVIEW_CREATED().status_code,
-                data=item,
             )
         
 
     @staticmethod
     def update_review(review_request: ReviewUpdateModel) -> HttpResponseModel:
         """Update review in attraction method implementation"""
-        quality = db.find_review_by_name(review_request.attraction, review_request.user)["quality"]
-        price = db.find_review_by_name(review_request.attraction, review_request.user)["price"]
-        if not quality or not price:
+        review = db.find_review_by_name(review_request.attraction, review_request.user)
+        if not review:
             return HttpResponseModel(
                 message=HTTPResponses.ITEM_NOT_FOUND().message,
                 status_code=HTTPResponses.ITEM_NOT_FOUND().status_code,
@@ -58,13 +81,12 @@ class ReviewService(ReviewServiceMeta):
             return HttpResponseModel(
                     message=HTTPResponses.REVIEW_UPDATED().message,
                     status_code=HTTPResponses.REVIEW_UPDATED().status_code,
-                    data=item,
                 ) 
     
     @staticmethod
     def delete_review(review_request: ReviewDeleteModel) -> HttpResponseModel:
         """Delete a review in attraction method implementation"""
-        review = db.find_hotel_by_name(review_request.attraction, review_request.user)
+        review = db.get_item_by_review_id(review_request.review_id)
         if not review:
             return HttpResponseModel(
                 message=HTTPResponses.ITEM_NOT_FOUND().message,
@@ -76,5 +98,4 @@ class ReviewService(ReviewServiceMeta):
             return HttpResponseModel(
                         message=HTTPResponses.REVIEW_DELETED().message,
                         status_code=HTTPResponses.REVIEW_DELETED().status_code,
-                        data=review_removed,
                     )

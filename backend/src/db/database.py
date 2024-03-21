@@ -177,8 +177,9 @@ class Database():
     def get_item_by_attraction_id(self, collection_name: str, attraction_id: str):
         collection: Collection = self.db[collection_name]
 
-        item = collection.find_onde({"attraction_id": str(attraction_id)})
+        item = collection.find_one({"attraction_id": str(attraction_id)})
         return {
+            "name": ["name"],
             "images": item["images"],
             "generalInfo": item["generalInfo"],
             "price": item["price"],
@@ -186,14 +187,22 @@ class Database():
             "relatedAttractions": item["relatedAttraction"]
         }
 
+    def getallreview(self, collection_name: str):
+        collection: Collection = self.db[collection_name]
+
+        return list(collection.find({}, {"_id": 0}))
+
     def get_item_by_review_id(self, collection_name: str, review_id: str):
         collection: Collection = self.db[collection_name]
 
-        item = collection.find_onde({"review_id": str(review_id)})
-        return {
-            "quality": item["quality"],
-            "price": item["price"]
-        }
+        item = collection.find_one({"review_id": str(review_id)})
+        if item:
+            return {
+                "user": item["user"],
+                "attraction": item["attraction"],
+                "quality": item["quality"],
+                "price": item["price"]
+            }
 
     def insert_item(self, collection_name: str, item: dict) -> dict:
         """
@@ -272,7 +281,7 @@ class Database():
         }
     
     def update_review(self, attraction_name: str, user_name:str, new_quality: float, new_price: float) -> dict:
-        collection: Collection = self.db["reviews"]
+        collection: Collection = self.db["Reviews"]
         filter = {"attraction": attraction_name, "user": user_name}
 
         update = {"$set": {"quality": new_quality, "price": new_price}}
@@ -285,13 +294,13 @@ class Database():
         }
 
     def find_review_by_name(self, attraction_name: str, user_name: str) -> dict :
-        collection: Collection = self.db["reviews"]
+        collection: Collection = self.db["Reviews"]
         filter = {"attraction": attraction_name, "user": user_name}
-        item = collection.find_onde(filter)
+        item = collection.find_one(filter)
         return item
 
     def delete_review(self, attraction_name: str, user_name: str) -> dict:
-        collection: Collection = self.db["reviews"]
+        collection: Collection = self.db["Reviews"]
         filter = {"attraction": attraction_name, "user": user_name}
 
         review = collection.delete_one(filter)

@@ -78,7 +78,7 @@ class HTTPResponses:
     @staticmethod
     def REVIEW_CREATED() -> HttpResponseModel:
         return HttpResponseModel(
-            message="Review created",
+            message="Review criada",
             status_code=201,
         )
 

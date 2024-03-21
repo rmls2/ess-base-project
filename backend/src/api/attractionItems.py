@@ -9,12 +9,12 @@ router = APIRouter()
     "/{attraction_id}",
     response_model=HttpResponseModel,
     status_code=status.HTTP_200_OK,
-    description="Retrieve an attraction by hotel ID",
+    description="Retrieve an attraction by attraction ID",
     tags=["attractions"],
     responses={
         status.HTTP_200_OK: {
             "model": HttpResponseModel,
-            "description": "Successfully got promotion by hotel id",
+            "description": "Successfully got attraction by attraction id",
         },
         status.HTTP_404_NOT_FOUND: {
             "description": "Item not found",
@@ -27,5 +27,67 @@ def get_attraction(attraction_id: str) -> HttpResponseModel:
     return item_get_response
 
 
+@router.get(
+    "/{attraction_id}/get_images",
+    response_model=HttpResponseModel,
+    status_code=status.HTTP_200_OK,
+    description="Retrieve all images by attraction ID",
+    tags=["attractions"],
+    responses={
+        status.HTTP_200_OK: {
+            "model": HttpResponseModel,
+            "description": "Successfully got all images by attraction id",
+        },
+        status.HTTP_404_NOT_FOUND: {
+            "description": "Item not found",
+        }
+    },
+)
+
+def get_images(attraction_id: str) -> HttpResponseModel:
+    item_get_response = AttractionService.get_images(attraction_id)
+    return item_get_response
+
+@router.get(
+    "/{attraction_id}/get_reviews",
+    response_model=HttpResponseModel,
+    status_code=status.HTTP_200_OK,
+    description="Retrieve all reviews by attraction ID",
+    tags=["attractions"],
+    responses={
+        status.HTTP_200_OK: {
+            "model": HttpResponseModel,
+            "description": "Successfully got all reviews by attraction id",
+        },
+        status.HTTP_404_NOT_FOUND: {
+            "description": "Item not found",
+        }
+    },
+)
+
+def get_reviews(attraction_id: str) -> HttpResponseModel:
+    item_get_response = AttractionService.get_reviews(attraction_id)
+    return item_get_response
 
 
+@router.post(
+    "/post_attraction",
+    response_model=HttpResponseModel,
+    status_code=status.HTTP_201_CREATED,
+    description="create a attraction",
+    tags=["attractions"],
+    responses={
+        status.HTTP_201_CREATED: {
+            "model": HttpResponseModel,
+            "description": "Successfully created attraction",
+        },
+        status.HTTP_500_INTERNAL_SERVER_ERROR:{
+            "model": HttpResponseModel,
+            "description": "Error in creating attraction"
+        }
+    }
+)
+
+def add_attraction(attractionrequest: AttractionModel) -> HttpResponseModel:
+    item_get_response = AttractionService.add_attraction(attractionrequest)
+    return item_get_response

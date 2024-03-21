@@ -7,6 +7,27 @@ from src.service.impl.review_service import ReviewService
 router = APIRouter()
 
 @router.get(
+    "/get_all",
+    response_model=HttpResponseModel,
+    status_code=status.HTTP_200_OK,
+    description="Retrieve an review by review ID",
+    tags=["reviews"],
+    responses={
+        status.HTTP_200_OK: {
+            "model": HttpResponseModel,
+            "description": "Successfully got review by review id",
+        },
+        status.HTTP_404_NOT_FOUND: {
+            "description": "Item not found",
+        }
+    },
+)
+
+def get_all() -> HttpResponseModel:
+    item_get_response = ReviewService.get_all()
+    return item_get_response
+
+@router.get(
     "/{review_id}",
     response_model=HttpResponseModel,
     status_code=status.HTTP_200_OK,
